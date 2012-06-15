@@ -50,6 +50,7 @@ namespace WinFormGameClient
         }
 
         public string Partner { get; set; }
+        public string Message { get; set; }
 
         public string ClientStreamStr
         {
@@ -96,14 +97,16 @@ namespace WinFormGameClient
 
         public string[] GetGamersList()
         {
-            this.sendRefreshCommand();
+            //this.sendRefreshCommand();
             string[] gamersList = this.ClientStreamStr.Split(new string[] { "||" }, System.StringSplitOptions.RemoveEmptyEntries);
+            this.ClientStreamStr = string.Empty;
             return gamersList;
         }
 
         public void SendCredentials(string senderName)
         {
             this.ClientStreamStr = "##NAME##::" + senderName + "::";
+            //this.ClientStreamStr = string.Empty;
         }
 
         /// <summary>
@@ -121,7 +124,18 @@ namespace WinFormGameClient
                 this.Partner = messageStrings[1];
             }
 
+            this.ClientStreamStr = string.Empty;
             return flag;
+        }
+
+        internal void DoDisconnect(string senderName)
+        {
+            this.ClientStreamStr = "##DISCONNECT##::" + senderName;
+        }
+
+        internal void Refresh()
+        {
+            this.sendRefreshCommand();
         }
 
         /// <summary>
@@ -143,5 +157,5 @@ namespace WinFormGameClient
         }
 
         
-    }
+   }
 }

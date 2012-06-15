@@ -33,6 +33,7 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.groupBoxGamers = new System.Windows.Forms.GroupBox();
+            this.buttonCheckInvite = new System.Windows.Forms.Button();
             this.dataGridViewGamers = new System.Windows.Forms.DataGridView();
             this.ColumnGamers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,6 +79,7 @@
             // 
             // groupBoxGamers
             // 
+            this.groupBoxGamers.Controls.Add(this.buttonCheckInvite);
             this.groupBoxGamers.Controls.Add(this.dataGridViewGamers);
             this.groupBoxGamers.Controls.Add(this.buttonRefresh);
             this.groupBoxGamers.Controls.Add(this.buttonInvait);
@@ -87,6 +89,16 @@
             this.groupBoxGamers.TabIndex = 4;
             this.groupBoxGamers.TabStop = false;
             this.groupBoxGamers.Text = "Gamers";
+            // 
+            // buttonCheckInvite
+            // 
+            this.buttonCheckInvite.Location = new System.Drawing.Point(220, 166);
+            this.buttonCheckInvite.Name = "buttonCheckInvite";
+            this.buttonCheckInvite.Size = new System.Drawing.Size(75, 23);
+            this.buttonCheckInvite.TabIndex = 4;
+            this.buttonCheckInvite.Text = "Check invite";
+            this.buttonCheckInvite.UseVisualStyleBackColor = true;
+            this.buttonCheckInvite.Click += new System.EventHandler(this.buttonCheckInvite_Click);
             // 
             // dataGridViewGamers
             // 
@@ -134,7 +146,8 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 3000;
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 30000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // groupBoxLog
@@ -167,6 +180,7 @@
             this.Controls.Add(this.buttonConnect);
             this.Name = "GameClientMainForm";
             this.Text = "Game Client";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameClientMainForm_FormClosing);
             this.groupBoxGamers.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGamers)).EndInit();
             this.groupBoxLog.ResumeLayout(false);
@@ -190,6 +204,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.GroupBox groupBoxLog;
         private System.Windows.Forms.TextBox textBoxLog;
+        private System.Windows.Forms.Button buttonCheckInvite;
     }
 }
 

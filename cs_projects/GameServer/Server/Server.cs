@@ -57,7 +57,6 @@ namespace Server
                 ///with connected client
                 Thread clientThread = new Thread(HandleClientComm);//new ParameterizedThreadStart(HandleClientComm));
                 client.HostThreadID = clientThread.ManagedThreadId;
-
                 clientThread.Start(client);
             }
         }
@@ -100,7 +99,7 @@ namespace Server
                 messageStrings = stringToProcess.Split(new string[] { "::" }, System.StringSplitOptions.RemoveEmptyEntries);
                 header = messageStrings[0];
 
-                if(header.Equals("##NAME##"))
+                if(header.Equals("##NAME##") && messageStrings.Length > 1)
                 {
                     this.addPlayerToList(messageStrings[1], nClient.HostThreadID);
                     this.sendListOfGamersToClient(nClient.tcpClient);
@@ -114,6 +113,11 @@ namespace Server
                 if (header.Equals("##INVITE##"))
                 {
                     this.sendInviteToClient(messageStrings[1], messageStrings[2]);
+                }
+
+                if (header.Equals("##DISCONNECT##"))
+                {
+                    this.disconnectClient(messageStrings[1]);
                 }
 
             }
@@ -157,6 +161,7 @@ namespace Server
                 }
 
                 stringToProcess = this.encoder.GetString(message, 0, bytesRead);
+                Console.WriteLine(stringToProcess);         ///For debugging
                 messageStrings = stringToProcess.Split(new string[] { "::" }, System.StringSplitOptions.RemoveEmptyEntries);
                 header = messageStrings[0];
 
@@ -176,10 +181,29 @@ namespace Server
                     this.sendInviteToClient(messageStrings[1], messageStrings[2]);
                 }
 
+                if (header.Equals("##DISCONNECT##"))
+                {
+                    this.disconnectClient(messageStrings[1]);
+                }
+
             }
 
-            nClient.tcpClient.Close();
+            //nClient.tcpClient.Close();
 
+        }
+
+        private void disconnectClient(string clientName)
+        {
+            foreach (var gamer in this.listOfGamers)
+            {
+                if (gamer.Name.Equals(clientName))
+                {
+                    this.listOfGamers.Remove(gamer);
+                    break;
+                }
+            }
+
+            Console.WriteLine("Player {0} has been disconnected", clientName);
         }
 
         private void addPlayerToList(string name, int hostThreadID)

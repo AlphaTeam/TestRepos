@@ -20,24 +20,32 @@ namespace WinFormGameClient
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            this.client.SendCredentials(textBoxNickname.Text);
-            string[] gamersList = this.client.GetGamersList();
-            this.textBoxLog.Text = this.client.ClientStreamStr + "\n";
-            foreach (string gamer in gamersList)
+            if (this.textBoxNickname.Text != string.Empty)
             {
-                string[] tmp = new string[2];
-                tmp = gamer.Split(new string[] { "::" }, System.StringSplitOptions.RemoveEmptyEntries);
-                this.dataGridViewGamers.Rows.Add();
-                this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.None)].Cells[0].Value = tmp[0];
-                this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.None)].Cells[1].Value = tmp[1];
+                this.client.SendCredentials(textBoxNickname.Text);
+                string[] gamersList = this.client.GetGamersList();
+                //.textBoxLog.Text = this.client.ClientStreamStr + "\n";
+                foreach (string gamer in gamersList)
+                {
+                    string[] tmp = new string[2];
+                    tmp = gamer.Split(new string[] { "::" }, System.StringSplitOptions.RemoveEmptyEntries);
+                    this.dataGridViewGamers.Rows.Add();
+                    this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.None)].Cells[0].Value = tmp[0];
+                    this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.None)].Cells[1].Value = tmp[1];
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter your nickname");
             }
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             this.dataGridViewGamers.Rows.Clear();
+            client.Refresh();
             string[] gamersList = this.client.GetGamersList();
-            this.textBoxLog.Text = this.client.ClientStreamStr + "\n";
+            //this.textBoxLog.Text = this.client.ClientStreamStr + "\n";
             foreach (string gamer in gamersList)
             {
                 string[] tmp = new string[2];
@@ -58,7 +66,7 @@ namespace WinFormGameClient
                 {
                     this.client.SendInviteTo(this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.Selected)].Cells[0].Value.ToString(),
                                             this.textBoxNickname.Text);
-                    this.textBoxLog.Text = this.client.ClientStreamStr + "\n";
+                    //this.textBoxLog.Text = this.client.ClientStreamStr + "\n";
                 }
             }
             catch (Exception ex)
@@ -69,11 +77,27 @@ namespace WinFormGameClient
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            //MessageBox.Show("Timer is working!");
+            //if (client.CheckInvite())
+            //{
+            //    MessageBox.Show("Player " + this.client.Partner + " invited you for game\n\n Are you agree to play?",
+            //                    "Attention!!!", MessageBoxButtons.YesNo);
+            //}
+        }
+
+        private void buttonCheckInvite_Click(object sender, EventArgs e)
+        {
             if (client.CheckInvite())
+               // MessageBox.Show("Test");
             {
                 MessageBox.Show("Player " + this.client.Partner + " invited you for game\n\n Are you agree to play?",
                                 "Attention!!!", MessageBoxButtons.YesNo);
             }
+        }
+
+        private void GameClientMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.client.DoDisconnect(this.textBoxNickname.Text);
         }
     }
 }
