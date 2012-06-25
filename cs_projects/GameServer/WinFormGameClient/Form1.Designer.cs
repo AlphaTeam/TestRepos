@@ -35,13 +35,13 @@
             this.groupBoxGamers = new System.Windows.Forms.GroupBox();
             this.buttonCheckInvite = new System.Windows.Forms.Button();
             this.dataGridViewGamers = new System.Windows.Forms.DataGridView();
-            this.ColumnGamers = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBoxNickname = new System.Windows.Forms.TextBox();
             this.labelNickname = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBoxLog = new System.Windows.Forms.GroupBox();
             this.textBoxLog = new System.Windows.Forms.TextBox();
+            this.ColumnGamers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxGamers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGamers)).BeginInit();
             this.groupBoxLog.SuspendLayout();
@@ -49,9 +49,9 @@
             // 
             // buttonInvait
             // 
-            this.buttonInvait.Location = new System.Drawing.Point(206, 19);
+            this.buttonInvait.Location = new System.Drawing.Point(220, 19);
             this.buttonInvait.Name = "buttonInvait";
-            this.buttonInvait.Size = new System.Drawing.Size(105, 48);
+            this.buttonInvait.Size = new System.Drawing.Size(91, 48);
             this.buttonInvait.TabIndex = 1;
             this.buttonInvait.Text = "Invait to game";
             this.buttonInvait.UseVisualStyleBackColor = true;
@@ -59,9 +59,9 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(206, 94);
+            this.buttonRefresh.Location = new System.Drawing.Point(220, 94);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(105, 48);
+            this.buttonRefresh.Size = new System.Drawing.Size(91, 44);
             this.buttonRefresh.TabIndex = 2;
             this.buttonRefresh.Text = "Refresh";
             this.buttonRefresh.UseVisualStyleBackColor = true;
@@ -111,22 +111,8 @@
             this.dataGridViewGamers.Location = new System.Drawing.Point(11, 19);
             this.dataGridViewGamers.Name = "dataGridViewGamers";
             this.dataGridViewGamers.ReadOnly = true;
-            this.dataGridViewGamers.Size = new System.Drawing.Size(183, 223);
+            this.dataGridViewGamers.Size = new System.Drawing.Size(203, 223);
             this.dataGridViewGamers.TabIndex = 3;
-            // 
-            // ColumnGamers
-            // 
-            this.ColumnGamers.HeaderText = "Gamers";
-            this.ColumnGamers.Name = "ColumnGamers";
-            this.ColumnGamers.ReadOnly = true;
-            this.ColumnGamers.Width = 140;
-            // 
-            // ColumnStatus
-            // 
-            this.ColumnStatus.HeaderText = "Status";
-            this.ColumnStatus.Name = "ColumnStatus";
-            this.ColumnStatus.ReadOnly = true;
-            this.ColumnStatus.Width = 43;
             // 
             // textBoxNickname
             // 
@@ -146,8 +132,7 @@
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 30000;
+            this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // groupBoxLog
@@ -168,11 +153,25 @@
             this.textBoxLog.Size = new System.Drawing.Size(300, 102);
             this.textBoxLog.TabIndex = 0;
             // 
+            // ColumnGamers
+            // 
+            this.ColumnGamers.HeaderText = "Gamers";
+            this.ColumnGamers.Name = "ColumnGamers";
+            this.ColumnGamers.ReadOnly = true;
+            this.ColumnGamers.Width = 115;
+            // 
+            // ColumnStatus
+            // 
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.ReadOnly = true;
+            this.ColumnStatus.Width = 43;
+            // 
             // GameClientMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 437);
+            this.ClientSize = new System.Drawing.Size(336, 437);
             this.Controls.Add(this.groupBoxLog);
             this.Controls.Add(this.labelNickname);
             this.Controls.Add(this.textBoxNickname);
@@ -199,12 +198,12 @@
         private System.Windows.Forms.TextBox textBoxNickname;
         private System.Windows.Forms.Label labelNickname;
         private System.Windows.Forms.DataGridView dataGridViewGamers;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnGamers;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.GroupBox groupBoxLog;
         private System.Windows.Forms.TextBox textBoxLog;
         private System.Windows.Forms.Button buttonCheckInvite;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnGamers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
     }
 }
 

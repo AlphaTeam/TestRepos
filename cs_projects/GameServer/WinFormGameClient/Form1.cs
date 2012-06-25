@@ -16,6 +16,13 @@ namespace WinFormGameClient
         public GameClientMainForm()
         {
             InitializeComponent();
+            ClientEvents ce = new ClientEvents();
+            ce.clientCallHandler += new ClientEvents.ClientCallHandler(ce_clientCallHandler);
+        }
+
+        void ce_clientCallHandler()
+        {
+            throw new NotImplementedException();
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -33,6 +40,7 @@ namespace WinFormGameClient
                     this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.None)].Cells[0].Value = tmp[0];
                     this.dataGridViewGamers.Rows[this.dataGridViewGamers.Rows.GetLastRow(DataGridViewElementStates.None)].Cells[1].Value = tmp[1];
                 }
+                this.timer1.Enabled = true;
             }
             else
             {
@@ -78,11 +86,19 @@ namespace WinFormGameClient
         private void timer1_Tick(object sender, EventArgs e)
         {
             //MessageBox.Show("Timer is working!");
-            //if (client.CheckInvite())
-            //{
-            //    MessageBox.Show("Player " + this.client.Partner + " invited you for game\n\n Are you agree to play?",
-            //                    "Attention!!!", MessageBoxButtons.YesNo);
-            //}
+            if (client.CheckInvite())
+            {
+                if (MessageBox.Show("Player " + this.client.Partner + " invited you for game\n\n Are you agree to play?",
+                                "Attention!!!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    timer1.Enabled = false;
+                    this.client.SendAgree(this.textBoxNickname.Text);
+                }
+                else
+                {
+                    this.client.SendDisagree(this.textBoxNickname.Text);
+                }
+            }
         }
 
         private void buttonCheckInvite_Click(object sender, EventArgs e)

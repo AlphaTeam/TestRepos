@@ -50,7 +50,7 @@ namespace WinFormGameClient
         }
 
         public string Partner { get; set; }
-        public string Message { get; set; }
+        //public string Message { get; set; }
 
         public string ClientStreamStr
         {
@@ -63,10 +63,26 @@ namespace WinFormGameClient
             }
             get
             {
+                string str;
                 byte[] message = new byte[ByteMessageSize];
                 int bytesRead = 0;
-                bytesRead = clientStream.Read(message, 0, ByteMessageSize);
-                string str = this.encoder.GetString(message, 0, bytesRead);
+                clientStream.ReadTimeout = 500;
+                try
+                {
+                    bytesRead = clientStream.Read(message, 0, ByteMessageSize);
+                }
+                catch (IOException ex)
+                {
+
+                }
+                if (bytesRead == 0)
+                {
+                    str = string.Empty;
+                }
+                else
+                {
+                    str = this.encoder.GetString(message, 0, bytesRead);
+                }
                 return str;
             }
         }
@@ -116,9 +132,10 @@ namespace WinFormGameClient
         internal bool CheckInvite()
         {
             bool flag = false;
-            string[] messageStrings = this.ClientStreamStr.Split(new string[] { "::" }, System.StringSplitOptions.RemoveEmptyEntries);
+            string stringToProcess = this.ClientStreamStr;
+            string[] messageStrings = stringToProcess.Split(new string[] { "::" }, System.StringSplitOptions.RemoveEmptyEntries);
 
-            if (messageStrings[0].Equals("##INVITE##"))
+            if (messageStrings.Length > 0 && messageStrings[0].Equals("##INVITE##"))
             {
                 flag = true;
                 this.Partner = messageStrings[1];
@@ -156,6 +173,14 @@ namespace WinFormGameClient
             this.ClientStreamStr = "##REFRESH##::";
         }
 
-        
+        internal void SendAgree(string senderName)
+        {
+            this.ClientStreamStr = "##YES##::" + this.Partner + "::" + senderName + "::";
+        }
+
+        internal void SendDisagree(string senderName)
+        {
+            this.ClientStreamStr = "##NO##::" + this.Partner + "::" + senderName + "::";
+        }
    }
 }

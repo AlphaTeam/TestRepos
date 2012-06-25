@@ -7,8 +7,8 @@ namespace Server
 {
     public class Couple
     {
-        int SenderID { get; set; }
-        int ReceiverID { get; set; }
-        int GameID { get; set; }
+        public int SenderID { get; set; }
+        public int ReceiverID { get; set; }
+        public int GameID { get; set; }
     }
 }

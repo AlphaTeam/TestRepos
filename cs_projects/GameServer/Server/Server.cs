@@ -12,7 +12,6 @@ namespace Server
     class Server
     {
         private List<Client> listOfGamers = new List<Client>();
-        private List<Couple> listOfGames = new List<Couple>();
         private int idCount = 0;
         private int gameIDCount = 0;
 
@@ -20,6 +19,8 @@ namespace Server
         private Thread listenThread;
         private ASCIIEncoding encoder = new ASCIIEncoding();
         private const int ByteMessageSize = 1000;
+
+        //EventLog el = new EventLog();
 
         private class NetworkClient
         {
@@ -34,13 +35,6 @@ namespace Server
             this.tcpListener = new TcpListener(IPAddress.Any, 54321);
             this.listenThread = new Thread(new ThreadStart(ListenForClients));
             this.listenThread.Start();
-        }
-
-        private Couple getIDOfGamers(string message)
-        {
-            Couple gamers = new Couple();
-            
-            return gamers;
         }
 
         private void ListenForClients()
@@ -64,7 +58,7 @@ namespace Server
         private void HandleClientComm(object client)
         {
             NetworkClient nClient = (NetworkClient)client;
-            //TcpClient tcpClient = nClient.tcpClient;
+            ////TcpClient tcpClient = nClient.tcpClient;
             
             NetworkStream clientStream = nClient.tcpClient.GetStream();
             byte[] message = new byte[ByteMessageSize];
@@ -216,9 +210,9 @@ namespace Server
 
         private void sendListOfGamersToClient(TcpClient tcpClient)
         {
-            ///Message string format: name::is_free||.
-            ///E.g., "Striker::0" means that player Striker isn't free for game.
-            ///"||" means goto next string.
+            //Message string format: name::is_free||.
+            //E.g., "Striker::0" means that player Striker isn't free for game.
+            //"||" means goto next string.
             StringBuilder messageString = new StringBuilder();
             foreach (var gamer in this.listOfGamers)
             {
@@ -266,9 +260,18 @@ namespace Server
             }
         }
 
-        private void SendMessageToClient(string clientName)
+        private void sendMessageToClient(string clientName)
         {
             ///This function is for sending various messages to client, e.g., turns in game.
         }
+
+        private Couple getIDOfGamers(string message)
+        {
+            Couple gamers = new Couple();
+
+            return gamers;
+        }
+
+        
     }
 }
